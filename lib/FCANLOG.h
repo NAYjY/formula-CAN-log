@@ -8,7 +8,7 @@
 #define Flase 0
 #define Buadrate 57600
 #define CAN_SPI_CS_NAYjY_PIN 10
-#define CAN_SPI_CS_UNOR3_PIN 9
+#define   9
 #define SDcard_SPI_CS_UNOR3_PIN 10
 #define XBee_RX_PIN 2
 #define XBee_TX_PIN 3
@@ -64,6 +64,10 @@
 #define FL_BL_ID 0xFD
 #define BR_BL_ID 0xFE
 #define BL_BL_ID 0xFF //**BL
+
+#define Time_ID 0xD0
+#define TimeGPS_ID 0xD1
+#define TimeIMU_ID 0xD2
 
 //Define Analog Pin
 #define FrontRight A0

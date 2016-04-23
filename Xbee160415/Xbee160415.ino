@@ -95,9 +95,9 @@ void loop()
                 
             }
             Serial.println();
-            //int AN = analogRead(A0);
-            //Serial.print(0xD1,HEX); Serial.print('\t'); Serial.print((AN>>8)& 0xFF,HEX); Serial.print('\t'); Serial.println(AN & 0xFF,HEX);
-            //Serial.print(208,HEX); Serial.print('\t'); Serial.println(millis());
+            int AN = analogRead(A0);
+            Serial.print(0xD1,HEX); Serial.print('\t'); Serial.print((AN>>8)& 0xFF,HEX); Serial.print('\t'); Serial.println(AN & 0xFF,HEX);
+            Serial.print(208,HEX); Serial.print('\t'); Serial.println(millis());
             //Serial.println(analogRead(A3));
         }
     

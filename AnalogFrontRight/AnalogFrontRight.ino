@@ -16,6 +16,9 @@ MCP_CAN CAN(CAN_SPI_CS_NAYjY_PIN);                                    // Set CS 
 //Variable Definition
 uint8_t Buf[lenAnalog];
 
+unsigned long previousMillis = 0;        // will store last time was updated
+// constants won't change :
+const long interval = 100; // 10 mes/s (1000/10)
 
 void setup() {
 
@@ -42,25 +45,19 @@ void setup() {
 
 void loop() {
 
- // while(CheckTime());
-  delay(delayFrontRight);
+
               // read Analog 10-bits from device 
               // Then send to CAN
-              
+              unsigned long currentMillis = millis();
+                 if(currentMillis - previousMillis >= interval) {
+                 // save the last time 
+                 previousMillis = currentMillis;
               FR = analogRead(FrontRight);
               //Serial.println(FR);
               Buf[0]=(FR>>8); Buf[1] = FR & 0xFF; //(Buf[0]<<8)+Buf[1]);
               CAN.sendMsgBuf(FR_FR_ID, 0, lenAnalog, Buf);
-              
-delay(21);
-}
-
-bool CheckTime(){
-
-   if(CAN_MSGAVAIL == CAN.checkReceive())            // check if data coming
-    {
-        if (CAN.getCanId() == TIME_ID) return Flase;
-        else return True;
-    }    
+                 }
 
 }
+
+

@@ -1,24 +1,37 @@
-//By NAYjY 160317
-//Analog Back-Right
+//By NAYjY 160313
+//Analog Front-Right
 //Formula student racing car CAN protocol data logger
+// 160313 Send to CAN bus succesed
 // 160317 Use FCANLOG.h
-// 160409 Timing 1
-// Upload status 1
+
 
 #include <mcp_can.h>
 #include <SPI.h>
 #include "FCANLOG.h"
 
+//Even-Right Odd-Left
+//Analog Pin
+//#define FrontRight A0
+//#define FrontLeft A1
+//#define BackRight A2
+//#define BackLeft A3
+//
+//const int SPI_CS_PIN = 10; //myBorad-10 UNO-9
+
+//// Identify Bit
+//const uint8_t FR_FR_ID = 0xF0;
+//const uint8_t FL_FR_ID = 0xF1;
+//const uint8_t BR_FR_ID = 0xF2;
+//const uint8_t BL_FR_ID = 0xF3;
+
 //c++ class
 MCP_CAN CAN(CAN_SPI_CS_NAYjY_PIN);                                    // Set CS pin
 
 //Variable Definition
-uint8_t Buf[lenAnalog];
+//uint8_t ID[2] = {FR_FR_ID,FL_FR_ID}; //Even-Right Odd-Left
+uint8_t Buf[2];
 
-
-unsigned long previousMillis = 0;        // will store last time was updated
-// constants won't change :
-const long interval = 100; // 10 mes/s (1000/10)
+uint16_t FR;
 
 
 void setup() {
@@ -45,23 +58,16 @@ void setup() {
 }
 
 void loop() {
-
-              unsigned long currentMillis = millis();
-                 if(currentMillis - previousMillis >= interval) {
-                 // save the last time 
-                 previousMillis = currentMillis;
               // read Analog 10-bits from device 
               // Then send to CAN
               
-              BR = analogRead(BackRight);
-              //Serial.println(BR);
-              Buf[0]=(BR>>8); Buf[1] = BR & 0xFF; //(Buf[0]<<8)+Buf[1]);
-              CAN.sendMsgBuf(BR_BR_ID, 0, lenAnalog, Buf);
+              FR = analogRead(FrontRight);
+              Serial.println(FR);
+              Buf[0]=(FR>>8); Buf[1] = FR & 0xFF; //(Buf[0]<<8)+Buf[1]);
+              CAN.sendMsgBuf(FR_FR_ID, 0, 2, Buf);
               
-                 }
+              
               
 
 
 }
-
-

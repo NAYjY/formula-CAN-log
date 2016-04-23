@@ -38,12 +38,12 @@ void setup()
 
     if(CAN_OK == CAN.begin(CAN_500KBPS))                   // init can bus : baudrate = 500k
     {
-        Serial.println("CAN BUS Shield init ok!");
+        Serial.println("000011110000");
     }
     else
     {
-        Serial.println("CAN BUS Shield init fail");
-        Serial.println("Init CAN BUS Shield again");
+        Serial.println("111111111111");
+        Serial.println("000000000000");
         delay(100);
         goto START_INIT;
     }
@@ -95,7 +95,7 @@ void loop()
                 
             }
             Serial.println();
-            CAN.sendMsgBuf(TIME_ID, 1, 2,u);
+            Serial.print(0xD0,HEX); Serial.print('\t'); Serial.println(millis());
         }
     
 

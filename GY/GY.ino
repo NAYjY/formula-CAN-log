@@ -41,7 +41,7 @@ uint8_t fifoBuffer[64]; // FIFO storage buffer
 
 unsigned long previousMillis = 0;        // will store last time was updated
 // constants won't change :
-const long interval = 37; // 27 mes/s (1000/27)
+const long interval = 100; // 10 mes/s (1000/10)
 
 // orientation/motion vars
 Quaternion q;           // [w, x, y, z]         quaternion container
@@ -181,16 +181,10 @@ void loop() {
 
                 ByteRoll = (byte*) & ypr[2];
                 CAN.sendMsgBuf(Gyr_R_ID, StandardID, lenGyr, ByteRoll);     //int intbits = (inData[3] << 24) | ((inData[2] & 0xff) << 16) | ((inData[1] & 0xff) << 8) | (inData[0] & 0xff);
-          
+
+                uint32_t tIMU = millis();
+                uint8_t tBuf[4] = {(tIMU>>24)& 0xFF,(tIMU>>16)& 0xFF,(tIMU>>8)& 0xFF,tIMU& 0xFF};
+                CAN.sendMsgBuf(0xD2, StandardID, 4, tBuf);
                  }
-}
-bool CheckTime(){
-
-   if(CAN_MSGAVAIL == CAN.checkReceive())            // check if data coming
-    {
-        if (CAN.getCanId() == TIME_ID) return Flase;
-        else return True;
-    }    
-
 }
 
